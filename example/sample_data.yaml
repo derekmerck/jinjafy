@@ -1,0 +1,61 @@
+# Sample template data for md presentation
+
+author: John Doe
+date: Last Week
+title: My Title
+background:
+  color: #FFFFFF
+
+intro:
+  title: About Me
+  content: |-
+    * some stuff about me
+    * some other stuff about me
+  image: my_image.jpg
+
+agenda:
+  title: Agenda
+  content: |-
+    1. topic 1
+    2. topic 2
+
+follow_up:
+  title: Conclusion
+  content: |-
+    Important discussion goes here
+
+content:
+
+- title: title1
+
+  children:
+  - title: subtitle11
+    content: |-
+      * this that and the other
+      * some other stuff
+    image: my_image1.jpg
+
+  - title: subtitle12
+    content: |-
+      * this that and the other
+      * some other stuff
+    content2: |-
+      * this that and the other2
+      * some other stuff2
+
+- title: title2
+
+  children:
+  - title: subtitle21
+    content: |-
+      * this that and the other
+      * some other stuff
+
+  - title: subtitle12
+    content: |-
+      * this that and the other
+      * some other stuff
+    image: my_image22.jpg
+
+
+
