@@ -22,7 +22,7 @@ Usage
 ```bash
 $ pip install https://github.com/derekmerck/jinjafy
 $ jinjafy examples/revealjs_template.md sample_data.yaml \
-  -o presentation.html -f md -t revealjjs
+  -o presentation.html -f md -t revealjs
 ```
 
 See `jinjafy --help` for details.

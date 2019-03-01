@@ -1,0 +1,56 @@
+# Sample template data for md presentation
+
+author: John Doe
+date: Last Week
+title: My Title
+
+children:
+
+  - title: intro
+
+    children:
+
+    - title: About Me
+      content: |-
+        * some **stuff about me**
+        * some other stuff about me
+      image: https://picsum.photos/300/500
+      im_caption: A sample image
+
+    - title: Agenda
+      content: |-
+        1. topic 1
+        2. topic 2
+
+  - title: title1
+
+    children:
+
+    - title: subtitle11
+      content: |-
+        * this that and the other
+        * some other stuff
+
+    - title: subtitle12
+      content: |-
+        * this that and the other
+        * some other stuff
+      content2: |-
+        * this that and the other2
+        * some other stuff2
+
+  - title: title2
+
+    children:
+    - title: subtitle21
+      content: |-
+        * this that and the other
+        * some other stuff
+
+    - title: subtitle12
+      content: |-
+        * this that **and the other**
+        * some other stuff
+      image: https://picsum.photos/500/300
+      wide_image: true
+      im_caption: Another sample image

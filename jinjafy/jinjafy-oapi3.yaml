@@ -1,0 +1,53 @@
+openapi: "3.0.0"
+
+info:
+  description: "Jinjafy REST API spec."
+  version: "1.0.0"
+  title: "Jinjafy"
+  contact:
+    email: "Derek_Merck@brown.edu"
+
+tags:
+  - name: "present"
+    description: "Render a presentation from data"
+
+#servers:
+#  - url: /v1.0
+#    description: DIANA API version 1.0
+
+paths:
+  /hello:
+    get:
+      operationId: "server.hello"
+      responses:
+        "200":
+          description: "Successful operation"
+
+  /render/{template}:
+    get:
+      tags:
+        - "present"
+      summary:  "Render a presentation"
+      operationId: "server.render"
+      parameters:
+        - name: "template"
+          in: "path"
+          description: "rendering template (revealjs)"
+          required: true
+          schema:
+            type: "string"
+        - name: "source"
+          in: "query"
+          description: "data source location"
+          required: true
+          schema:
+            type: "string"
+        - name: "theme"
+          in: "query"
+          description: "revealjs theme"
+          required: false
+          schema:
+            type: "string"
+      responses:
+        "200":
+          description: "Successful operation"
