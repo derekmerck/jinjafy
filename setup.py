@@ -2,9 +2,9 @@ from setuptools import setup, find_packages
 
 setup(
     name='jinjafy',
-    version='0.2',
+    version='0.2.1',
     packages=find_packages(),
-    package_data={'jinjafy': ['extras/*.txt']},
+    package_data={'jinjafy': ['extras/*.txt', 'templates/*']},
     install_requires=[
         'Click',
         'pypandoc',
@@ -13,6 +13,7 @@ setup(
     ],
     entry_points='''
         [console_scripts]
-        jinjafy=jinjjafy.cli:jinjafy_cli
+        jinjafy=jinjafy.cli:jinjafy_cli
+        jinjafy-rest=jinjafy.server:app.run
     ''',
 )

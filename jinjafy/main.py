@@ -1,3 +1,4 @@
+from typing import Mapping
 import logging
 import tempfile
 import os
@@ -10,40 +11,61 @@ import jinja2
 import pypandoc
 
 
-def stencil(template, meta, target_format=None, theme=None):
+def stencil(template: str,
+            meta: Mapping,
+            target_format: str = None,
+            theme: str = None):
 
     here = Path(__file__).parent
 
-    _meta = yaml.safe_load(meta)
+    # Check for extra meta
+    if target_format:
+        extras = glob(os.path.join(here, "extras", "{}*".format(target_format)))
+        for e in extras:
+            with open(e) as f:
+                _extras = yaml.safe_load(f)
+                meta = {**meta, **_extras}
 
-    if theme and target_format:
-        fn = "{}_themes.yaml".format(target_format)
-        with open(here / 'extras' / fn) as f:
-            themes = yaml.safe_load(f)
-            _meta["theme"] = themes.get(theme)
+    if theme and meta.get("themes") and meta["themes"].get(theme):
+        meta["theme"] = meta["themes"].get(theme)
 
+    # Setup env
     loader = jinja2.FileSystemLoader([here / "templates", "."])
     env = jinja2.Environment(loader=loader)
 
-    # Check for includes
-    here = Path(__file__).parent
-    templates = glob( os.path.join( here, "templates", "{}*".format(template) ) )
-
     _output = {}
+    _format = None
+
+    # Find templates
+    templates = glob( os.path.join( here, "templates", "{}*".format(template) ) )
+    R = re.compile(r"^{}\.(?P<tmpl>[hbp]*)\.?(?P<format>[^.]*)$".format(template))
+    _map = {
+        'h': 'header',
+        '':  'body',
+        'b': 'pre_body',
+        'p': 'post_body'
+    }
     for t in templates:
         t = os.path.basename(t)
         _template = env.get_template(t)
-        _output[t] = _template.render(_meta)
+        content = _template.render(meta)
 
+        m = R.match(t)
+
+        if not m:
+            raise ValueError("Unknown template include type ({})".format(t))
+
+        k = _map.get(m.group('tmpl'))
+        _output[k] = {"content": content,
+                      "format":  m.group('format')}
+
+    logging.debug(pformat(_output))
     return _output
 
 
-def convert(input, _format, target_format,
-            inc_header,
-            inc_pre_body,
-            inc_post_body,
-            theme=None,
-            extra_args=None):
+def convert(_input: Mapping, target_format: str,
+            theme: str = None,
+            extra_args: str = None):
     """
     Wrappper for pypandoc that supports includes as strings and provides
     some target_format-specific defaults
@@ -62,7 +84,7 @@ def convert(input, _format, target_format,
 
     tmpfiles = []
 
-    def add_include_str(_str, arg_name):
+    def add_file_arg(_str, arg_name):
         if not _str:
             return
         nonlocal extra_args, tmpfiles
@@ -72,13 +94,17 @@ def convert(input, _format, target_format,
         extra_args += ['{}'.format(arg_name), f.name]
         tmpfiles.append( f.name )
 
-    add_include_str(inc_header, "-H")
-    add_include_str(inc_pre_body, "-B")
-    add_include_str(inc_post_body, "-A")
+    sections = [("header", "-H"),
+                ("pre-body", "-B"),
+                ("post-body", "-A")]
 
-    _output = pypandoc.convert_text(input,
+    for k,a in sections:
+        if _input.get(k):
+            add_file_arg(_input[k]["content"], a)
+
+    _output = pypandoc.convert_text(_input['body']['content'],
                                     target_format,
-                                    format=_format,
+                                    format=_input['body']['format'],
                                     extra_args=extra_args)
 
     for fn in tmpfiles:
@@ -89,36 +115,13 @@ def convert(input, _format, target_format,
     return _output
 
 
-def jinjafy(template, meta, to=None, theme=None, extra_args=None) -> str:
+def jinjafy(template: str, meta: Mapping, to: str = None, theme: str = None,
+            extra_args: list = None) -> str:
 
     _output = stencil(template, meta, target_format=to, theme=theme)
 
-    # logging.debug(pformat(_output))
-
-    # find base and includes
-    base = inc_pre_body = inc_header = inc_post_body = None
-
-    R = re.compile(r"{}\.([^.]*)\.([^.]*)".format(template))
-
-    for k, v in _output.items():
-        match = R.match(k)
-
-        if match:
-            if match.groups()[0].lower().startswith("h"):
-                inc_header = v
-            elif match.groups()[0].lower().startswith("b"):
-                inc_pre_body = v
-            elif match.groups()[0].lower().startswith("p"):
-                inc_post_body = v
-        else:
-            base = v
-            _format = os.path.splitext(k)[1][1:]
-
-    if to and (_format != to):
-        _output = convert(base, _format, target_format=to,
-                          inc_header=inc_header,
-                          inc_pre_body=inc_pre_body,
-                          inc_post_body=inc_post_body,
+    if to:
+        _output = convert(_output, target_format=to,
                           theme=theme,
                           extra_args=extra_args)
 

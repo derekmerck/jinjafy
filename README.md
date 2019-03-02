@@ -13,19 +13,33 @@ Source: <https://www.github.com/derekmerck/jinjafy>
 Overview
 ----------------
 
-Quick stand-alone document templating and format conversion using Jinja2 and Pandoc.
+Stand-alone document templating and format conversion using Jinja2 and Pandoc.
 
 
-Usage
+CLI Usage
 ----------------
+
+Generate a static data-driven revealjs presentation.
 
 ```bash
 $ pip install https://github.com/derekmerck/jinjafy
-$ jinjafy examples/revealjs_template.md sample_data.yaml \
-  -o presentation.html -f md -t revealjs
+$ jinjafy revealjs_2d examples/sample_data.yaml -t revealjs --theme moon
 ```
 
 See `jinjafy --help` for details.
+
+
+Server Usage
+----------------
+
+Serve a dynamic data-driven revealjs presentation.
+
+```bash
+$ jinjafy-rest
+$ curl http://localhost:8080/render/revealjs_2d?source=example%2Fsample_presentation.yaml&theme=moon
+```
+
+Source may be a URL or relative path to the server for local content.
 
 
 Dependencies

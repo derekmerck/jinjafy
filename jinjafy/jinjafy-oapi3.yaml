@@ -51,3 +51,8 @@ paths:
       responses:
         "200":
           description: "Successful operation"
+          content:
+            text/html:
+              schema:
+                type: "string"
+              example: "<html><body>Hello</body></html>"

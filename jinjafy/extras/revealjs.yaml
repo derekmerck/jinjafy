@@ -1,0 +1,31 @@
+---
+themes:
+  light: &LIGHT_THEME
+    highlight: navy
+
+  dark: &DARK_THEME
+    highlight: khaki
+
+  black:  *DARK_THEME
+  white:  *LIGHT_THEME
+  league: *DARK_THEME
+  beige:  *LIGHT_THEME
+  sky:    *LIGHT_THEME
+  night:  *DARK_THEME
+  serif:  *DARK_THEME
+  simple: *LIGHT_THEME
+  solarizes: *LIGHT_THEME
+
+  moon:
+    <<: *DARK_THEME
+    strong: white
+    caption: white
+
+  blood:
+    <<: *DARK_THEME
+    strong: maroon
+    caption: maroon
+    background:
+      parallax: true
+      file: sample_dark.png
+      im_size: [500, 500]
