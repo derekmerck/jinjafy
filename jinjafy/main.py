@@ -10,28 +10,41 @@ import yaml
 import jinja2
 import pypandoc
 
+from .jinja2_filters import *
+from .yaml_extras import IncludeLoader
+
 
 def stencil(template: str,
             meta: Mapping,
             target_format: str = None,
-            theme: str = None):
+            theme: str = None,
+            bibliography: str = None):
 
     here = Path(__file__).parent
+
+    if bibliography:
+        with open(bibliography) as f:
+            meta['bibliography'] = yaml.safe_load(f)
 
     # Check for extra meta
     if target_format:
         extras = glob(os.path.join(here, "extras", "{}*".format(target_format)))
         for e in extras:
             with open(e) as f:
-                _extras = yaml.safe_load(f)
+                _extras = yaml.load(f, Loader=IncludeLoader)
                 meta = {**meta, **_extras}
 
     if theme and meta.get("themes") and meta["themes"].get(theme):
         meta["theme"] = meta["themes"].get(theme)
 
     # Setup env
-    loader = jinja2.FileSystemLoader([here / "templates", "."])
+    loader = jinja2.FileSystemLoader([here / "templates", os.curdir])
     env = jinja2.Environment(loader=loader)
+
+    env.filters['sortcsl'] = j2_sortcsl
+    env.globals['zip'] = zip
+    env.globals['list'] = list
+    env.filters['bystart'] = j2_bystart
 
     _output = {}
     _format = None
@@ -65,19 +78,33 @@ def stencil(template: str,
 
 def convert(_input: Mapping, target_format: str,
             theme: str = None,
-            extra_args: str = None):
+            bibliography: str = None,
+            extra_args: str = None,
+            outfile: str = None):
     """
-    Wrappper for pypandoc that supports includes as strings and provides
+    Wrappper for pypandoc that supports 'includes' as strings and provides
     some target_format-specific defaults
     """
 
     if not extra_args:
         extra_args = []
 
+    filters = []
+
     if target_format == "revealjs":
         extra_args += ["-s",
                        "-V", "revealjs-url=https://revealjs.com",
                        "--slide-level=3"]
+
+    here = Path(__file__).parent
+    csl_path = here / "extras" / "chicago-syllabus_plus.csl"
+
+    if bibliography:
+        extra_args += ["--bibliography={}".format(bibliography),
+                       "--csl={}".format(csl_path)]
+        filters.append('pandoc-citeproc')
+        if target_format == "md" or target_format == "markdown":
+            target_format = "markdown-citations"
 
     if theme:
         extra_args += ["-V", "theme={}".format(theme)]
@@ -98,14 +125,16 @@ def convert(_input: Mapping, target_format: str,
                 ("pre-body", "-B"),
                 ("post-body", "-A")]
 
-    for k,a in sections:
+    for k, a in sections:
         if _input.get(k):
             add_file_arg(_input[k]["content"], a)
 
     _output = pypandoc.convert_text(_input['body']['content'],
                                     target_format,
                                     format=_input['body']['format'],
-                                    extra_args=extra_args)
+                                    filters=filters,
+                                    extra_args=extra_args,
+                                    outputfile=outfile)
 
     for fn in tmpfiles:
         # logging.debug(tmpfiles)
@@ -115,14 +144,18 @@ def convert(_input: Mapping, target_format: str,
     return _output
 
 
-def jinjafy(template: str, meta: Mapping, to: str = None, theme: str = None,
-            extra_args: list = None) -> str:
+def jinjafy(template: str, meta: Mapping, to: str = None,
+            theme: str = None, bibliography: str = None,
+            extra_args: list = None, outfile: str = None) -> str:
 
-    _output = stencil(template, meta, target_format=to, theme=theme)
+    _output = stencil(template, meta, target_format=to,
+                      theme=theme, bibliography=bibliography)
 
     if to:
         _output = convert(_output, target_format=to,
                           theme=theme,
-                          extra_args=extra_args)
+                          bibliography=bibliography,
+                          extra_args=extra_args,
+                          outfile=outfile)
 
     return _output

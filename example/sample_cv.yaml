@@ -1,0 +1,128 @@
+---
+# Sample template for md cv with refs
+
+contact:
+  name: John Doe
+  credentials: IBid
+  email:
+    work: jdoe@example.com
+  orcid: 12345
+
+education:
+  - degree: MS
+    enddate: 2000-06-01
+    startdate: 2002-06-01
+    institution: Big University
+    place: Big City, ST
+    department: Computer Science
+
+  - degree: BS
+    institution: Local College
+    place: Small Town, ST
+    enddate: 1999-06-01
+
+academic:
+  - institution: Big University
+    department: My Department
+    position: Adjunct Scholar
+    place: Big City, ST
+    startdate: 2005-06-01
+    enddate:
+
+  - institution: Research Lab
+    position: Director of Research
+    place: Big City, ST
+    startdate: 2010-06-01
+    enddate:
+
+affiliations: []
+
+professional:
+  - company: Local Restaurant
+    position: Waiter
+    place: Big City, ST
+    startdate: 1999-05-01
+    enddate:   2001-05-01
+
+publications:
+  manuscripts: ["doeMyPaper2001", "doeMyPresentation2000"]
+  conferences: ["doeMyPresentation2000", "doeMyPaper2001", "smithMyPresentation2005", "whiteMyPresentation2005"]
+
+advisees:
+  - name: Jane Smith
+    role: PhD Candidate
+    institution: Big University
+    startdate: 2000-01-02
+    enddate:   2/1/2010
+
+  - name: Bill White
+    role: PhD Candidate
+    institution: Big University
+    startdate: 2005-01-01
+    enddate:
+
+awards:
+  - source: Agency 1
+    mechanism: Pilot Award
+    title: My Award
+    pi: Doe
+    role: PI
+    startdate: 2005-06-01
+    enddate:   2006-05-30
+    amount:    $300,000
+
+  - source: Agency 1
+    mechanism: Continuation Award
+    title: My Other Award
+    pi: Doe
+    role: PI
+    startdate: 2006-06-01
+    enddate:   2008-05-30
+    amount:    $600,000
+
+teaching:
+
+  - institution: Small College
+    department: Ontologies
+    number: ONT101
+    name: Intro Ontologies
+    startdate: 2000-09-01
+    enddate: 2001-06-01
+
+  - institution: Small College
+    department: Ontologies
+    number: ONT102
+    name: Advanced Ontologies
+    startdate: 2001-09-01
+    enddate: 2002-06-01
+
+hosted_talks: ["whiteMyPresentation2005"]
+
+service:
+
+  - role: Scientific Review Panel
+    organization: Big University
+    startdate:  2010-01-01
+    enddate:
+
+  - role: Faculty Committee
+    organization: Big University
+    startdate: 2005-01-01
+    enddate:   2008-01-01
+
+press:  ["doeMyPress2005"]
+
+memberships:
+
+  - organization: American Assoc. of Mechanistic Ontologists (AAMO)
+    role: Full Member
+    startdate: 2010-06-01
+    enddate:
+
+technical_proficiencies:
+
+  - Car Repair: [Volkswagon, Ford]
+  - Ontologies: [Dewie Decimal, 18th Century Heraldry]
+  - Specialty: [Eggs and Bacon, Napping]
+
+...

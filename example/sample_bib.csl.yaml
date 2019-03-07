@@ -1,0 +1,81 @@
+---
+references:
+
+  - id: doeMyPresentation2000
+    type: paper-conference
+    title: My Famous Presentation
+    container-title: International Society of Example Data
+    URL: 'http://www.example.com'
+    language: en
+    author:
+      - family: Doe
+        given: John
+      - family: Smith
+        given: Jane
+    issued:
+      - year: 2000
+        month: 1
+    source: Sample
+
+  - id: doeMyPaper2001
+    type: article-journal
+    title: My Famous Paper
+    container-title: Journal of Example Data
+    URL: 'http://www.example.com'
+    language: en
+    author:
+      - family: Doe
+        given: John
+    issued:
+      - year: 2001
+        month: 1
+    source: Sample
+
+  - id: smithMyPresentation2005
+    type: paper-conference
+    title: First Presentation
+    container-title: International Society of Example Data
+    URL: 'http://www.example.com'
+    language: en
+    author:
+      - family: Smith
+        given: Jane
+      - family: Doe
+        given: John
+    issued:
+      - year: 2005
+        month: 2
+        day:   1
+    source: Sample
+
+  - id: whiteMyPresentation2005
+    type: paper-conference
+    title: Second Presentation
+    container-title: International Society of Example Data
+    URL: 'http://www.example.com'
+    DOI: example/white.2005.ised
+    language: en
+    author:
+      - family: Bob
+        given: White
+      - family: Doe
+        given: John
+    issued:
+      - year: 2005
+        month: 2
+        day:   2
+    source: Sample
+
+  - id: doeMyPress2005
+    type: article-newspaper
+    title: Doe for President!
+    container-title: Big City Post
+    language: en
+    author:
+      - family: Newspaper Reporter
+    issued:
+      - year: 2005
+        month: 2
+        day:   2
+    source: Sample
+...

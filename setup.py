@@ -13,7 +13,7 @@ setup(
     ],
     entry_points='''
         [console_scripts]
-        jinjafy=jinjafy.cli:jinjafy_cli
+        jinjafy=jinjafy.cli:main
         jinjafy-rest=jinjafy.server:app.run
     ''',
 )
