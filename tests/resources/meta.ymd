@@ -1,0 +1,19 @@
+---
+title: My title
+author: Author, My
+content: |-
+  ** Emphatic content **
+...
+# {{title}}
+
+{{ author }}
+
+{{content*key2}}
+
+---
+key2: 2
+...
+## Subheadings
+
+Subinfo
+

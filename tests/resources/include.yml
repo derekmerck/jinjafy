@@ -1,0 +1,5 @@
+foo: !include inc_foo.yml
+bar: !include inc_bar.yml
+#array: !include  [inc_foo.yml, inc_bar.yml]
+#dict: !include   {foo: inc_foo.yml, bar: inc_bar.yml}
+#raw: !include_raw baz.txt

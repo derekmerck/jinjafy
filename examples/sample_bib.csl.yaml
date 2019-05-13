@@ -5,7 +5,7 @@ references:
     type: paper-conference
     title: My Famous Presentation
     container-title: International Society of Example Data
-    URL: 'http://www.example.com'
+    URL: 'http://www.examples.com'
     language: en
     author:
       - family: Doe
@@ -21,7 +21,7 @@ references:
     type: article-journal
     title: My Famous Paper
     container-title: Journal of Example Data
-    URL: 'http://www.example.com'
+    URL: 'http://www.examples.com'
     language: en
     author:
       - family: Doe
@@ -35,7 +35,7 @@ references:
     type: paper-conference
     title: First Presentation
     container-title: International Society of Example Data
-    URL: 'http://www.example.com'
+    URL: 'http://www.examples.com'
     language: en
     author:
       - family: Smith
@@ -52,8 +52,8 @@ references:
     type: paper-conference
     title: Second Presentation
     container-title: International Society of Example Data
-    URL: 'http://www.example.com'
-    DOI: example/white.2005.ised
+    URL: 'http://www.examples.com'
+    DOI: examples/white.2005.ised
     language: en
     author:
       - family: Bob

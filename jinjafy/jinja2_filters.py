@@ -7,6 +7,7 @@ def j2_bystart(items, reverse=False):
     items.sort(key=lambda k: k['startdate'] or k['enddate'], reverse=reverse)
     return items
 
+
 def j2_sortcsl(keys, bibliography, reverse=False):
 
     dates = []

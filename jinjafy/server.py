@@ -7,8 +7,11 @@ import yaml
 from jinjafy import jinjafy
 
 """
+Example:
+
 /render/revealjs_2d?source=<source>&theme=moon
-"https://raw.githubusercontent.com/derekmerck/jinjafy/master/example/sample_presentation.yaml"
+
+"https://raw.githubusercontent.com/derekmerck/jinjafy/master/examples/sample_presentation.yaml"
 
 """
 

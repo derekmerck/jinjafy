@@ -55,3 +55,4 @@ children:
       image: https://picsum.photos/500/300
       wide_image: true
       im_caption: Another sample image
+...

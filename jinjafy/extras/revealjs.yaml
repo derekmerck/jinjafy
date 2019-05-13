@@ -14,7 +14,7 @@ themes:
   night:  *DARK_THEME
   serif:  *DARK_THEME
   simple: *LIGHT_THEME
-  solarizes: *LIGHT_THEME
+  solarized: *LIGHT_THEME
 
   moon:
     <<: *DARK_THEME

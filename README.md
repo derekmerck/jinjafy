@@ -30,13 +30,13 @@ Generate a static data-driven [revealjs][] presentation.
 [revealjs]: https://revealjs.com/#/
 
 ```bash
-$ jinjafy revealjs_2d examples/sample_data.yaml -t revealjs --theme moon
+$ jinjafy revealjs_2d example/sample_presentation.yaml -t revealjs --theme moon
 ```
 
 Generate a data-driven cv.
 
 ```bash
-$ jinjafy cv examples/sample_cv.yaml -t docx --bibliography=example/sample_bib.csl.yaml
+$ jinjafy cv example/sample_cv.yaml -t docx --bibliography=example/sample_bib.csl.yaml
 ```
 
 When working with references, it can be convenient to setup your bibliography file using an environment variable:
@@ -64,10 +64,12 @@ Dependencies
 - [Jinja2][]
 - [Pandoc][] and `pandoc-citeproc`
 - [Click][]
+- [Connexion][]
 
 [Jinja2]: http://jinja.pocoo.org
 [Pandoc]: https://pandoc.org
 [Click]: https://palletsprojects.com/p/click/
+[Connexion]: https://connexion.readthedocs.io/en/latest/
 
 
 License

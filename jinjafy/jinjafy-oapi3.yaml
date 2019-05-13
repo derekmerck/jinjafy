@@ -13,7 +13,7 @@ tags:
 
 #servers:
 #  - url: /v1.0
-#    description: DIANA API version 1.0
+#    description: Jinjafy API version 1.0
 
 paths:
   /hello:

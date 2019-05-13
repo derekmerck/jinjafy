@@ -7,7 +7,7 @@ epilog = """
 \b
 Example: 
 
-$ jinjafy revealjs_2d example/sample_presentation.yaml -o slides.html -t revealjs --theme night
+$ jinjafy revealjs_2d examples/sample_presentation.yaml -o slides.html -t revealjs --theme night
 """
 
 

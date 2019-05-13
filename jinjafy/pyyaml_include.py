@@ -22,7 +22,7 @@ import pprint
 
 
 class IncludeLoader(yaml.Loader):
-    def __init__(self, stream):
+    def __init__(self, stream, version="1.0", preserve_quotes=False):
         self._root = os.path.split(stream.name)[0]
         super(IncludeLoader, self).__init__(stream)
         IncludeLoader.add_constructor('!include', IncludeLoader.include)
@@ -34,7 +34,7 @@ class IncludeLoader(yaml.Loader):
 
     def include(self, node, func=None):
         if func == None:
-            func=self.read_yml
+            func=self.read_yaml
 
         if isinstance(node, yaml.ScalarNode):
             return func(self.construct_scalar(node))
@@ -55,7 +55,7 @@ class IncludeLoader(yaml.Loader):
             logging.error("Unrecognised node type in !include statement")
             raise yaml.constructor.ConstructorError
 
-    def read_yml(self, filename):
+    def read_yaml(self, filename):
         filepath = os.path.join(self._root, filename)
 #        with codecs.open(filepath, encoding="utf-8") as f:
         with open(filepath, 'r') as f:
@@ -66,28 +66,3 @@ class IncludeLoader(yaml.Loader):
 #        with codecs.open(filepath, encoding="utf-8") as f:
         with open(filepath, 'r') as f:
             return f.read()
-
-
-def test():
-
-    with open("test/yaml_extras/base.yml") as f:
-        res = yaml.load(f, Loader=IncludeLoader)
-        assert( res == {'raw': '@baz [baz baz] -baz ---', 'scalar': ['foo', 'fooo', 'foooo'], 'dict': {'foo': ['foo', 'fooo', 'foooo'], 'bar': {'bar': ['foo', 'fooo', 'foooo']}}, 'array': [['foo', 'fooo', 'foooo'], {'bar': ['foo', 'fooo', 'foooo']}]} )
-
-
-    s = \
-"""
-foo: [1,2,3]
-bar: {foo: bar}    
-"""
-    import StringIO
-    stio = StringIO.StringIO(s)
-    stio.name = os.getcwd()
-    res = yaml.load(stio, Loader=IncludeLoader)
-    assert(res == {'foo': [1, 2, 3], 'bar': {'foo': 'bar'}} )
-
-
-if __name__ == "__main__":
-
-    logging.basicConfig(level=logging.DEBUG)
-    test()

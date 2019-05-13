@@ -5,7 +5,7 @@ contact:
   name: John Doe
   credentials: IBid
   email:
-    work: jdoe@example.com
+    work: jdoe@examples.com
   orcid: 12345
 
 education:
@@ -123,6 +123,6 @@ technical_proficiencies:
 
   - Car Repair: [Volkswagon, Ford]
   - Ontologies: [Dewie Decimal, 18th Century Heraldry]
-  - Specialty: [Eggs and Bacon, Napping]
+  - Specialty:  [Eggs and Bacon, Napping]
 
 ...
