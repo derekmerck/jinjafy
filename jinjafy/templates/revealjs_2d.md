@@ -58,6 +58,7 @@ parallaxBackgroundVertical:  {{ (theme.background.im_size[1] / 10) | int }}
 {%- endif %}
 {%- endif %}
 
+suppress-bibliography: true
 ...
 
 {% for item in children -%}
