@@ -30,13 +30,13 @@ Generate a static data-driven [revealjs][] presentation.
 [revealjs]: https://revealjs.com/#/
 
 ```bash
-$ jinjafy revealjs_2d example/sample_presentation.yaml -t revealjs --theme moon
+$ jinjafy revealjs_2d examples/sample_presentation.yaml -t revealjs --theme moon
 ```
 
 Generate a data-driven cv.
 
 ```bash
-$ jinjafy cv example/sample_cv.yaml -t docx --bibliography=example/sample_bib.csl.yaml
+$ jinjafy cv examples/sample_cv.yaml -t docx --bibliography=example/sample_bib.csl.yaml
 ```
 
 When working with references, it can be convenient to setup your bibliography file using an environment variable:

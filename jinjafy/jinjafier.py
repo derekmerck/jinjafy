@@ -1,4 +1,5 @@
 import io
+import collections
 from glob import glob
 from pathlib import Path
 from typing import Union
@@ -6,6 +7,7 @@ from enum import Enum
 from pprint import pformat
 import attr
 import jinja2
+from .ruamel_include import yaml
 from . import Pandoc, YmdReader
 from .jinja2_filters import *
 
@@ -18,6 +20,15 @@ class Format(Enum):
     HTML = "html"
 
 
+def deep_update(d, u):
+    for k, v in u.items():
+        if isinstance(v, collections.Mapping):
+            d[k] = deep_update(d.get(k, {}), v)
+        else:
+            d[k] = v
+    return d
+
+
 @attr.s
 class Jinjafier(object):
 
@@ -28,10 +39,13 @@ class Jinjafier(object):
     target_format = attr.ib(default=Format.MARKDOWN)
     extra_args = attr.ib(factory=list)
     bibliography = attr.ib(default=None)
+    default_meta = attr.ib(factory=list)
 
     env = attr.ib(init=False)
     _template = attr.ib(init=False)
     _boilerplate = attr.ib(init=False)
+    _default_meta = attr.ib(init=False)
+
 
     @env.default
     def make_env(self):
@@ -42,6 +56,7 @@ class Jinjafier(object):
         env.globals['zip'] = zip
         env.globals['list'] = list
         env.filters['bystart'] = j2_bystart
+        env.filters['strftime'] = j2_strftime
 
         # def render_block(block, level=1):
         #     return Pandoc.render_block(block, level)
@@ -53,6 +68,7 @@ class Jinjafier(object):
 
         env.filters['render_block'] = Pandoc.render_block
         # env.filters['render_bp'] = render_bp
+        env.filters['boilerplate'] = lambda x: x
 
         return env
 
@@ -100,24 +116,73 @@ class Jinjafier(object):
             logging.debug(bp)
             return bp
 
+    @_default_meta.default
+    def set_default_meta(self):
+        # logging.debug(self.default_meta)
+        result = {}
+        for item in self.default_meta:
+            deep_update( result, self.get_meta(item) )
+        return result
+
+    @classmethod
+    def get_bib(cls, bib):
+        if not bib:
+            return None
+
+        if isinstance(bib, dict):
+            logging.debug("Found dict bib")
+            return bib
+
+        logging.debug("Found str or filelike bib")
+        return yaml.load(bib)
+
+
     @classmethod
     def get_meta(cls, meta):
 
         if isinstance(meta, dict):
             logging.debug("Found dict meta")
             return meta
+
         elif isinstance(meta, io.TextIOBase):
             logging.debug("Found filelike meta")
+
             _meta, _content = YmdReader.read(meta)
-            _blocks = Pandoc.get_blocks(_content)
-            return {**_meta, "blocks": _blocks}
+            if _content:
+                _blocks = Pandoc.get_blocks(_content)
+                return {**_meta, "blocks": _blocks}
+            return {**_meta}
+
+        elif isinstance(meta, str):
+            meta_path = Path(meta)
+            if meta_path.is_file():
+                logging.debug("Found filename meta")
+                with open(meta_path) as f:
+                    _meta, _content = YmdReader.read(f)
+                    # logging.debug(pformat(_content))
+                    if _content:
+                        _blocks = Pandoc.get_blocks(_content)
+                        return {**_meta, "blocks": _blocks}
+                    else:
+                        return {**_meta}
+            else:
+                raise TypeError("Meta path is not a file")
+
         else:
             raise TypeError("Not filelike or dict")
 
-    def render(self, meta):
+    def render(self, meta, bibliography=None):
         meta = self.get_meta(meta)
+        _meta = deep_update(self._default_meta, meta)
+
+        _bibliography = self.get_bib(bibliography)
+
+        # logging.debug(pformat(_bibliography))
+
+        # logging.debug(pformat(_meta))
+
         if self._boilerplate:
             meta["blocks"] = {**meta.get("blocks", {}), **self._boilerplate}
-        content = self._template.render(meta)
+        content = self._template.render(_meta, bibliography=_bibliography)
 
         return content

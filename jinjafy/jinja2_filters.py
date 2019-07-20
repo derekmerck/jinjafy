@@ -1,6 +1,14 @@
 from datetime import datetime
 import logging
 from pprint import pformat
+from dateutil import parser as DateParser
+
+
+def j2_strftime(date):
+    date = DateParser.parse(date)
+    native = date.replace(tzinfo=None)
+    format = '%B %d, %Y'
+    return native.strftime(format)
 
 
 def j2_bystart(items, reverse=False):

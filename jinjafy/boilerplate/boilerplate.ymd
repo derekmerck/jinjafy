@@ -1,0 +1,33 @@
+Deidentified
+=========================
+
+Patient images will be anonymized for processing and the results will be aggregated and summarized, eliminating the possibility that any particular patient image will be identifiable in the results.
+Deidentified image data will be stored on a password protected research PACS.
+A unique study number will be assigned to each study subject and will be used as identification in the study.
+A lexicon mapping study ids to real patient medical record numbers will be encrypted and stored on a password protected system for auditing purposes.
+At the conclusion of the study, the deidentified data will be securely deleted.
+The encrypted lexicon will be stored for at least 5 years so that the study may be reproduced exactly if necessary.
+
+
+Quality Improvement
+=========================
+
+This is a clinical quality improvement initiative; standard patient protections of PHI will be respected.
+
+
+No Risk Retrospective
+=========================
+
+This is a retrospective analysis. Subjects will not be exposed to any change in patient care or any additional risks, other than potential loss of confidentiality. Any public-use data has already been deidentified.  We routinely handle clinical imaging and demographic data in a HIPAA-compliant and safe manner.  Safeguards are in place to protect patient confidentiality both during and after the review.  Informed Consent is not required for this protocol.
+
+
+No Risk Prospective
+==========================
+
+This is a no-risk prospective analysis.  Subjects will be consented for inclusion in the study, but imaged *only* as clinically indicated.  Subjects will not be exposed to any additional risks, other than potential loss of confidentiality.  We routinely handle imaging and demographic data safely, and safeguards are in place to protect patient confidentiality both during and after the review.
+
+
+Imaging Registry
+===========================
+This program will not result in changes to subjects’ patient care, nor expose them to any additional risks, other than potential loss of confidentiality. The investigators routinely handle clinical imaging and demographic data in a HIPAA-compliant and safe manner. The image data that we propose to collect and manage will be entirely anonymized and identified only by a uniquely assigned study ID. Separate informed consent is not required for this registry as individual patient consent is acquired at enrollment for each subject as part of each parent trial. This includes a consent to transfer subject image data and PHI across the trial network for analysis and review by affiliated staff and researchers.
+

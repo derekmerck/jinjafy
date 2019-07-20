@@ -1,3 +1,4 @@
+{# CV template #}
 ---
 title: {{ contact.name }}{%- if contact.credentials %}{{ contact.credentials }}{% endif %}
 ...

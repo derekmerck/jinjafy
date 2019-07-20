@@ -1,3 +1,5 @@
+{# Revealjs template with vertical sections #}
+
 {% macro render_slide(item, level=1, bread_crumbs='') %}
 
 {{ '#'*level }} {{ bread_crumbs }}{{ item.title }}{{ ' - ' if item.get('title_modifier') }}{{ item.title_modifier }}

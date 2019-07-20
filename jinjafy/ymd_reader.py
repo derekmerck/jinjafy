@@ -25,7 +25,7 @@ class YmdReader(object):
         var1 is equal to 10
         '''
 
-        Returns both the md string and the metadata
+        Returns both the processed md string and the metadata
 
         """
 
@@ -33,6 +33,11 @@ class YmdReader(object):
 
         logger.debug(type(doc))
         if isinstance(doc, io.TextIOBase):
+
+            if doc.name.endswith("yaml"):
+                metadata = yaml.load(doc)
+                return metadata, None
+
             doc = doc.read()
 
         yaml_pattern = re.compile(r"^---$.*?^\.\.\.$", re.M | re.DOTALL )
@@ -58,7 +63,7 @@ class YmdReader(object):
             yaml_part = "\n".join(_yaml_part)
 
             metadata = yaml.load(yaml_part)
-            logger.debug(pformat(metadata))
+            # logger.debug(pformat(metadata))
 
         if content and metadata:
             # Setup env
