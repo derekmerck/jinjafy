@@ -7,11 +7,14 @@
 
 {{ blocks.background | render_block(level=2) }}
 
-{# blocks.approach   | boilerplate('deidentified', 'data-collection', deidentified) | render_block(level=2) #}
+{{  blocks.approach | render_block(level=2) }}
+{# | boilerplate('deidentified', 'data-collection', deidentified) | render_block(level=2) }}#}
 
 {% if blocks['preliminary-results'] is defined %}{{ blocks['preliminary-results'] | render_block(level=3) }}{% endif %}
 
 {{ blocks['expected-results']  | render_block(level=2) }}
+
+{% if blocks["justification"] is defined %} {{ blocks['justification']  | render_block(level=2) }}{% endif %}
 
 {#{% if risk is defined -%}#}
 {#Risk#}
@@ -20,6 +23,5 @@
 {#{%- else %}#}
 {#{{ blocks.risk | render_block(2) }}#}
 {#{%- endif %}#}
-
 
 {% include "sections/bibliography.md" %}

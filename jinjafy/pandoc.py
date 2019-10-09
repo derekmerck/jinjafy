@@ -20,7 +20,8 @@ class Pandoc(object):
                 theme: str = None,
                 bibliography: str = None,
                 extra_args: str = None,
-                outfile: str = None):
+                outfile: str = None,
+                csl: str = None):
         """
         Wrappper for pypandoc that supports 'includes' as strings and provides
         some target_format-specific defaults
@@ -36,12 +37,13 @@ class Pandoc(object):
                            "-V", "revealjs-url=https://revealjs.com",
                            "--slide-level=3"]
 
-        here = Path(__file__).parent
-        csl_path = here / "extras" / "chicago-syllabus_plus.csl"
-
         if bibliography:
-            extra_args += ["--bibliography={}".format(bibliography),
-                           "--csl={}".format(csl_path)]
+            extra_args += ["--bibliography={}".format(bibliography)]
+
+            if csl == "PLUS":
+                here = Path(__file__).parent
+                csl_path = here / "extras" / "chicago-syllabus_plus.csl"
+                extra_args += ["--csl={}".format(csl_path)]
             filters.append('pandoc-citeproc')
             if target_format == "md" or target_format == "markdown":
                 target_format = "markdown-citations"

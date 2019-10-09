@@ -1,7 +1,7 @@
-% {{ title }}
-% {% for a in authors %}{{people[a]['name']}}; {%endfor%}
-% {{ date | strftime }}
-
+% {{ title }}  
+% {% for a in authors %}{{people[a]['name']}}; {%endfor%}  
+% {{ date | strftime }}  
+  
 {{ title }}
 =============================
 {% for a in authors %}

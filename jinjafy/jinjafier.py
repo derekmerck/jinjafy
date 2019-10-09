@@ -67,8 +67,8 @@ class Jinjafier(object):
         #         return Pandoc.render_block(block, level)
 
         env.filters['render_block'] = Pandoc.render_block
-        # env.filters['render_bp'] = render_bp
-        env.filters['boilerplate'] = lambda x: x
+        # env.filters['render_bp'] = Pandoc.render_bp
+        env.filters['boilerplate'] = Pandoc.render_block  # For old filters
 
         return env
 
